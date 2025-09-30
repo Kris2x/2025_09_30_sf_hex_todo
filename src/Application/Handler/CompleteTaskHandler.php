@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Application\CompleteTask;
+namespace App\Application\Handler;
 
+use App\Application\Command\CompleteTaskCommand;
 use App\Domain\Model\Task;
 use App\Domain\Port\TaskRepositoryInterface;
 use InvalidArgumentException;
 
-readonly class CompleteTaskCommandHandler
+readonly class CompleteTaskHandler
 {
     public function __construct(private TaskRepositoryInterface $taskRepository)
     {

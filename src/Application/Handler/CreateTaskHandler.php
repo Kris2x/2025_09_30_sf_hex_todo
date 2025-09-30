@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Application\CreateTask;
+namespace App\Application\Handler;
 
+use App\Application\Command\CreateTaskCommand;
 use App\Domain\Model\Task;
 use App\Domain\Port\TaskRepositoryInterface;
 
-final readonly class CreateTaskCommandHandler
+final readonly class CreateTaskHandler
 {
     public function __construct(
         private TaskRepositoryInterface $taskRepository

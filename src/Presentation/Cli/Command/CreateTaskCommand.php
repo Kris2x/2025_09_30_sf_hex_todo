@@ -2,17 +2,19 @@
 
 namespace App\Presentation\Cli\Command;
 
-use App\Domain\Model\Task;
-use App\Domain\Port\TaskRepositoryInterface;
+use App\Application\Command\CreateTaskCommand as CreateTaskApplicationCommand;
+use App\Application\Handler\CreateTaskHandler;
+use InvalidArgumentException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 class CreateTaskCommand extends Command
 {
     protected static $defaultName = 'app:create-task';
 
-    public function __construct(private readonly TaskRepositoryInterface $taskRepository)
+    public function __construct(private readonly CreateTaskHandler $handler)
     {
         parent::__construct();
     }
@@ -27,16 +29,20 @@ class CreateTaskCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $output->writeln('Write your task title:');
-        $title = trim(fgets(STDIN));
+        $io = new SymfonyStyle($input, $output);
 
-        $output->writeln('Write your task description:');
-        $description = trim(fgets(STDIN));
+        $title = $io->ask('Task title');
+        $description = $io->ask('Task description (optional)', '');
 
-        $task = new Task($title, $description);
-        $this->taskRepository->save($task);
-        $output->writeln('Task created successfully with ID: ' . $task->getId());
+        try {
+            $command = new CreateTaskApplicationCommand($title, $description);
+            $task = $this->handler->handle($command);
 
-        return Command::SUCCESS;
+            $io->success(sprintf('Task "%s" created successfully with ID: %s', $task->getTitle(), $task->getId()));
+            return Command::SUCCESS;
+        } catch (InvalidArgumentException $e) {
+            $io->error($e->getMessage());
+            return Command::FAILURE;
+        }
     }
 }

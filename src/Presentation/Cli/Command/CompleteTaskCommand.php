@@ -2,8 +2,8 @@
 
 namespace App\Presentation\Cli\Command;
 
-use App\Application\CompleteTask\CompleteTaskCommand as CompleteTaskApplicationCommand;
-use App\Application\CompleteTask\CompleteTaskCommandHandler;
+use App\Application\Command\CompleteTaskCommand as CompleteTaskApplicationCommand;
+use App\Application\Handler\CompleteTaskHandler;
 use DomainException;
 use InvalidArgumentException;
 use Symfony\Component\Console\Command\Command;
@@ -16,7 +16,7 @@ class CompleteTaskCommand extends Command
 {
     protected static $defaultName = 'app:complete-task';
 
-    public function __construct(private readonly CompleteTaskCommandHandler $handler)
+    public function __construct(private readonly CompleteTaskHandler $handler)
     {
         parent::__construct();
     }
