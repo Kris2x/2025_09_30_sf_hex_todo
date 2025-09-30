@@ -2,6 +2,7 @@
 
 namespace App\Domain\Model;
 
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use DomainException;
 use InvalidArgumentException;
@@ -14,14 +15,17 @@ class Task
     #[ORM\Column(type: 'string')]
     private string $id;
 
-    #[ORM\Column(type: 'boolean')]
-    private bool $isCompleted = false;
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    private ?DateTimeImmutable $completedAt = null;
 
     #[ORM\Column(type: 'string')]
     private string $title;
 
     #[ORM\Column(type: 'text')]
     private string $description = '';
+
+    #[ORM\Column(type: 'datetime_immutable')]
+    private DateTimeImmutable $createdAt;
 
     public function __construct(
         string $title,
@@ -35,15 +39,16 @@ class Task
 
         $this->title = $title;
         $this->description = $description;
+        $this->createdAt = new DateTimeImmutable();
     }
 
     public function complete(): void
     {
-        if ($this->isCompleted) {
+        if ($this->completedAt !== null) {
             throw new DomainException('Task is already completed');
         }
 
-        $this->isCompleted = true;
+        $this->completedAt = new DateTimeImmutable();
     }
 
     public function getId(): string
@@ -61,8 +66,13 @@ class Task
         return $this->description;
     }
 
-    public function isCompleted(): bool
+    public function getCreatedAt(): DateTimeImmutable
     {
-        return $this->isCompleted;
+        return $this->createdAt;
+    }
+
+    public function getCompletedAt(): ?DateTimeImmutable
+    {
+        return $this->completedAt;
     }
 }

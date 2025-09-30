@@ -2,8 +2,10 @@
 
 namespace App\Presentation\Cli\Command;
 
-use App\Domain\Port\TaskRepositoryInterface;
+use App\Application\CompleteTask\CompleteTaskCommand as CompleteTaskApplicationCommand;
+use App\Application\CompleteTask\CompleteTaskCommandHandler;
 use DomainException;
+use InvalidArgumentException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -14,7 +16,7 @@ class CompleteTaskCommand extends Command
 {
     protected static $defaultName = 'app:complete-task';
 
-    public function __construct(private readonly TaskRepositoryInterface $taskRepository)
+    public function __construct(private readonly CompleteTaskCommandHandler $handler)
     {
         parent::__construct();
     }
@@ -33,19 +35,15 @@ class CompleteTaskCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $taskId = $input->getArgument('id');
 
-        $task = $this->taskRepository->findById($taskId);
-
-        if ($task === null) {
-            $io->error(sprintf('Task with ID "%s" not found.', $taskId));
-            return Command::FAILURE;
-        }
-
         try {
-            $task->complete();
-            $this->taskRepository->save($task);
+            $command = new CompleteTaskApplicationCommand($taskId);
+            $task = $this->handler->handle($command);
 
             $io->success(sprintf('Task "%s" marked as completed!', $task->getTitle()));
             return Command::SUCCESS;
+        } catch (InvalidArgumentException $e) {
+            $io->error($e->getMessage());
+            return Command::FAILURE;
         } catch (DomainException $e) {
             $io->warning($e->getMessage());
             return Command::FAILURE;

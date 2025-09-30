@@ -16,7 +16,6 @@ final readonly class CreateTaskCommandHandler
     public function handle(CreateTaskCommand $command): Task
     {
         $task = new Task(
-            id: uniqid(),
             title: $command->title,
             description: $command->description
         );
