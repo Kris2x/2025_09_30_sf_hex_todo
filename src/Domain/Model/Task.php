@@ -2,24 +2,39 @@
 
 namespace App\Domain\Model;
 
+use Doctrine\ORM\Mapping as ORM;
 use DomainException;
 use InvalidArgumentException;
 
-
+#[ORM\Entity]
+#[ORM\Table(name: 'tasks')]
 class Task
 {
+    #[ORM\Id]
+    #[ORM\Column(type: 'string')]
     private string $id;
+
+    #[ORM\Column(type: 'boolean')]
     private bool $isCompleted = false;
+
+    #[ORM\Column(type: 'string')]
+    private string $title;
+
+    #[ORM\Column(type: 'text')]
+    private string $description = '';
+
     public function __construct(
-        private string $title,
-        private string $description,
+        string $title,
+        string $description = ''
     )
     {
         $this->id = uniqid('', true);
-
-        if(empty($title)) {
+        if (empty($title)) {
             throw new InvalidArgumentException('Title cannot be empty');
         }
+
+        $this->title = $title;
+        $this->description = $description;
     }
 
     public function complete(): void
