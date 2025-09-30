@@ -32,3 +32,6 @@ services:
 
     App\Presentation\Cli\Command\CompleteTaskCommand:
         public: true
+
+    App\Presentation\Cli\Command\DeleteTaskCommand:
+        public: true

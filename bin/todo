@@ -23,6 +23,7 @@ $application = new TodoApplication();
 $application->add($container->get(App\Presentation\Cli\Command\CreateTaskCommand::class));
 $application->add($container->get(App\Presentation\Cli\Command\GetTasksCommand::class));
 $application->add($container->get(App\Presentation\Cli\Command\CompleteTaskCommand::class));
+$application->add($container->get(App\Presentation\Cli\Command\DeleteTaskCommand::class));
 
 // Set default command
 $application->setDefaultCommand('list');

@@ -47,7 +47,7 @@ php bin/todo
 php bin/todo app:create-task
 ```
 
-Komenda poprosi o podanie tytułu i opisu zadania.
+Komenda poprosi interaktywnie o podanie tytułu i opisu zadania.
 
 ### Wyświetlanie wszystkich zadań
 
@@ -55,21 +55,48 @@ Komenda poprosi o podanie tytułu i opisu zadania.
 php bin/todo app:get-tasks
 ```
 
+Zadania wyświetlane są w formie tabeli z kolorowym statusem (✓ Completed / ○ Pending).
+
+### Oznaczanie zadania jako ukończone
+
+```bash
+php bin/todo app:complete-task <task-id>
+```
+
+Przykład:
+```bash
+php bin/todo app:complete-task 67920c1ae4a971.23456789
+```
+
 ## Architektura
 
-Projekt wykorzystuje **Architekturę Heksagonalną** (Ports and Adapters):
+Projekt wykorzystuje **Architekturę Heksagonalną** (Ports and Adapters) z elementami **CQRS**:
 
 ```
 src/
-├── Domain/           # Logika biznesowa
-│   ├── Model/        # Encje domenowe
-│   └── Port/         # Interfejsy (porty)
-├── Application/      # Przypadki użycia
-├── Infrastructure/   # Implementacje techniczne
-│   └── Persistence/  # Repozytoria Doctrine
-└── Presentation/     # Interfejsy użytkownika
-    └── Cli/          # Komendy konsolowe
+├── Domain/              # Logika biznesowa
+│   ├── Model/           # Encje domenowe (Task)
+│   └── Port/            # Interfejsy (TaskRepositoryInterface)
+├── Application/         # Przypadki użycia
+│   ├── Command/         # DTOs dla operacji zapisu
+│   ├── Query/           # DTOs dla operacji odczytu
+│   └── Handler/         # Handlery use cases
+├── Infrastructure/      # Implementacje techniczne
+│   └── Persistence/     # Repozytoria Doctrine
+└── Presentation/        # Interfejsy użytkownika
+    └── Cli/             # Własna konsola + komendy
 ```
+
+**Przepływ danych:**
+```
+CLI Command → Application Handler → Domain Port → Infrastructure Repository
+```
+
+**Cechy:**
+- Separacja warstw (Domain, Application, Infrastructure, Presentation)
+- Dependency Injection przez Symfony Container
+- Command/Query Separation (CQRS Light)
+- Własna aplikacja konsolowa (`TodoApplication`)
 
 ## Baza danych
 

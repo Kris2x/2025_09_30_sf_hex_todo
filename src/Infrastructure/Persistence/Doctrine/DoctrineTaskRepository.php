@@ -29,4 +29,10 @@ readonly class DoctrineTaskRepository implements TaskRepositoryInterface
     {
         return $this->entityManager->getRepository(Task::class)->findAll();
     }
+
+    public function delete(Task $task): void
+    {
+        $this->entityManager->remove($task);
+        $this->entityManager->flush();
+    }
 }
