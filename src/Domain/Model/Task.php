@@ -75,4 +75,9 @@ class Task
     {
         return $this->completedAt;
     }
+
+    public function isCompleted(): bool
+    {
+        return $this->completedAt !== null;
+    }
 }
