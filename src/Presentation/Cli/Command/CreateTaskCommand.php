@@ -2,8 +2,8 @@
 
 namespace App\Presentation\Cli\Command;
 
-use App\Application\Command\CreateTaskCommand as CreateTaskApplicationCommand;
-use App\Application\Handler\CreateTaskHandler;
+use App\Application\UseCase\CreateTask\CreateTaskCommand as CreateTaskApplicationCommand;
+use App\Application\UseCase\CreateTask\CreateTaskHandler;
 use InvalidArgumentException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;

@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Application\Handler;
+namespace App\Application\UseCase\CompleteTask;
 
-use App\Application\Command\CompleteTaskCommand;
 use App\Domain\Model\Task;
 use App\Domain\Port\TaskRepositoryInterface;
 use InvalidArgumentException;

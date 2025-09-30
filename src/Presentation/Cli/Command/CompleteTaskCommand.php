@@ -2,8 +2,8 @@
 
 namespace App\Presentation\Cli\Command;
 
-use App\Application\Command\CompleteTaskCommand as CompleteTaskApplicationCommand;
-use App\Application\Handler\CompleteTaskHandler;
+use App\Application\UseCase\CompleteTask\CompleteTaskCommand as CompleteTaskApplicationCommand;
+use App\Application\UseCase\CompleteTask\CompleteTaskHandler;
 use DomainException;
 use InvalidArgumentException;
 use Symfony\Component\Console\Command\Command;

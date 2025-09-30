@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Application\Handler;
+namespace App\Application\UseCase\DeleteTask;
 
-use App\Application\Command\DeleteTaskCommand;
 use App\Domain\Port\TaskRepositoryInterface;
 use InvalidArgumentException;
 
