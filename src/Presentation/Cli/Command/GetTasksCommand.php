@@ -2,7 +2,8 @@
 
 namespace App\Presentation\Cli\Command;
 
-use App\Domain\Port\TaskRepositoryInterface;
+use App\Application\Handler\GetAllTasksHandler;
+use App\Application\Query\GetAllTasksQuery;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
@@ -13,7 +14,7 @@ class GetTasksCommand extends Command
 {
     protected static $defaultName = 'app:get-tasks';
 
-    public function __construct(private readonly TaskRepositoryInterface $taskRepository)
+    public function __construct(private readonly GetAllTasksHandler $handler)
     {
         parent::__construct();
     }
@@ -29,7 +30,9 @@ class GetTasksCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
-        $tasks = $this->taskRepository->findAll();
+
+        $query = new GetAllTasksQuery();
+        $tasks = $this->handler->handle($query);
 
         if (empty($tasks)) {
             $io->warning('No tasks found.');
