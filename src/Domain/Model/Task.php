@@ -3,6 +3,7 @@
 namespace App\Domain\Model;
 
 use DomainException;
+use http\Exception\InvalidArgumentException;
 
 class Task
 {
@@ -13,6 +14,9 @@ class Task
         private bool $isCompleted = false,
     )
     {
+        if(empty($title)) {
+            throw new InvalidArgumentException('Title cannot be empty');
+        }
     }
 
     public function complete(): void
