@@ -42,6 +42,8 @@ class Task
         if ($this->isCompleted) {
             throw new DomainException('Task is already completed');
         }
+
+        $this->isCompleted = true;
     }
 
     public function getId(): string

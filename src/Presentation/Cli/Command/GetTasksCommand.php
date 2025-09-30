@@ -4,8 +4,10 @@ namespace App\Presentation\Cli\Command;
 
 use App\Domain\Port\TaskRepositoryInterface;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 class GetTasksCommand extends Command
 {
@@ -26,29 +28,36 @@ class GetTasksCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $io = new SymfonyStyle($input, $output);
         $tasks = $this->taskRepository->findAll();
 
-        $tasksArr = array_map(fn($task) => [
-            'id' => $task->getId(),
-            'title' => $task->getTitle(),
-            'description' => $task->getDescription(),
-            'isCompleted' => $task->isCompleted(),
-        ], $tasks);
-
-        if (empty($tasksArr)) {
-            $output->writeln('No tasks found.');
+        if (empty($tasks)) {
+            $io->warning('No tasks found.');
             return Command::SUCCESS;
         }
 
-        foreach ($tasksArr as $task) {
-            $output->writeln(sprintf(
-                'ID: %s, Title: %s, Description: %s, Completed: %s',
-                $task['id'],
-                $task['title'],
-                $task['description'],
-                $task['isCompleted'] ? 'Yes' : 'No'
-            ));
+        $io->title('📋 Task List');
+
+        $table = new Table($output);
+        $table->setHeaders(['ID', 'Title', 'Description', 'Status']);
+
+        foreach ($tasks as $task) {
+            $status = $task->isCompleted()
+                ? '<fg=green>✓ Completed</>'
+                : '<fg=yellow>○ Pending</>';
+
+            $table->addRow([
+                $task->getId(),
+                $task->getTitle(),
+                $task->getDescription(),
+                $status
+            ]);
         }
+
+        $table->render();
+
+        $io->newLine();
+        $io->success(sprintf('Total: %d task(s)', count($tasks)));
 
         return Command::SUCCESS;
     }

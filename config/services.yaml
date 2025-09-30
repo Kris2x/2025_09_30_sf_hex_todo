@@ -29,3 +29,6 @@ services:
 
     App\Presentation\Cli\Command\GetTasksCommand:
         public: true
+
+    App\Presentation\Cli\Command\CompleteTaskCommand:
+        public: true
