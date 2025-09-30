@@ -22,3 +22,10 @@ services:
     # Bind interface to implementation (Hexagonal Architecture)
     App\Domain\Port\TaskRepositoryInterface:
         class: App\Infrastructure\Persistence\Doctrine\DoctrineTaskRepository
+
+    # Make commands public for custom console application
+    App\Presentation\Cli\Command\CreateTaskCommand:
+        public: true
+
+    App\Presentation\Cli\Command\GetTasksCommand:
+        public: true

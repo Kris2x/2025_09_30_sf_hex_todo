@@ -33,10 +33,18 @@ php bin/console doctrine:migrations:migrate
 
 ## Użycie
 
+Aplikacja posiada własną konsolę dostępną przez `bin/todo`:
+
+### Wyświetlenie dostępnych komend
+
+```bash
+php bin/todo
+```
+
 ### Tworzenie zadania
 
 ```bash
-php bin/console app:create-task
+php bin/todo app:create-task
 ```
 
 Komenda poprosi o podanie tytułu i opisu zadania.
@@ -44,7 +52,7 @@ Komenda poprosi o podanie tytułu i opisu zadania.
 ### Wyświetlanie wszystkich zadań
 
 ```bash
-php bin/console app:get-tasks
+php bin/todo app:get-tasks
 ```
 
 ## Architektura

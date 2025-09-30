@@ -1,0 +1,30 @@
+#!/usr/bin/env php
+<?php
+
+use App\Presentation\Cli\TodoApplication;
+use Symfony\Component\Dotenv\Dotenv;
+
+require_once dirname(__DIR__).'/vendor/autoload.php';
+
+// Load environment variables
+if (file_exists(dirname(__DIR__).'/.env')) {
+    (new Dotenv())->bootEnv(dirname(__DIR__).'/.env');
+}
+
+// Boot Symfony kernel to get the container
+$kernel = new App\Kernel($_SERVER['APP_ENV'] ?? 'dev', (bool) ($_SERVER['APP_DEBUG'] ?? true));
+$kernel->boot();
+$container = $kernel->getContainer();
+
+// Create application
+$application = new TodoApplication();
+
+// Register commands from container
+$application->add($container->get(App\Presentation\Cli\Command\CreateTaskCommand::class));
+$application->add($container->get(App\Presentation\Cli\Command\GetTasksCommand::class));
+
+// Set default command
+$application->setDefaultCommand('list');
+
+// Run
+$application->run();
