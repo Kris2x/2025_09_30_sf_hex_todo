@@ -7,7 +7,7 @@ use App\Domain\Model\Task;
 use App\Domain\Port\TaskRepositoryInterface;
 use InvalidArgumentException;
 
-readonly class CompleteTaskHandler
+final readonly class CompleteTaskHandler
 {
     public function __construct(private TaskRepositoryInterface $taskRepository)
     {
@@ -15,11 +15,10 @@ readonly class CompleteTaskHandler
 
     public function handle(CompleteTaskCommand $command): Task
     {
-        $taskId = $command->getTaskId();
-        $task = $this->taskRepository->findById($taskId);
+        $task = $this->taskRepository->findById($command->taskId);
 
         if ($task === null) {
-            throw new InvalidArgumentException(sprintf('Task with ID "%s" not found.', $taskId));
+            throw new InvalidArgumentException(sprintf('Task with ID "%s" not found.', $command->taskId));
         }
 
         $task->complete();

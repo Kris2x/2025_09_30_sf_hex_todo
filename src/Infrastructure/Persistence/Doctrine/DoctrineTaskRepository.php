@@ -6,7 +6,7 @@ use App\Domain\Model\Task;
 use App\Domain\Port\TaskRepositoryInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
-readonly class DoctrineTaskRepository implements TaskRepositoryInterface
+final readonly class DoctrineTaskRepository implements TaskRepositoryInterface
 {
     public function __construct(
         private EntityManagerInterface $entityManager
