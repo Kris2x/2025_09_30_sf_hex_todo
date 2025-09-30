@@ -9,7 +9,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class GetTasksCommand extends Command
 {
-    protected static string $defaultName = 'app:get-tasks';
+    protected static $defaultName = 'app:get-tasks';
 
     public function __construct(private readonly TaskRepositoryInterface $taskRepository)
     {

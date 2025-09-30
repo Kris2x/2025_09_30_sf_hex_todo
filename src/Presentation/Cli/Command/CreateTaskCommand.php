@@ -10,7 +10,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class CreateTaskCommand extends Command
 {
-    protected static string $defaultName = 'app:create-task';
+    protected static $defaultName = 'app:create-task';
 
     public function __construct(private readonly TaskRepositoryInterface $taskRepository)
     {
