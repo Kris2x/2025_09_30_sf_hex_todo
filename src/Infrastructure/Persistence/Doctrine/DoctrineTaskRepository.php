@@ -1,28 +1,32 @@
 <?php
 
 namespace App\Infrastructure\Persistence\Doctrine;
+
 use App\Domain\Model\Task;
 use App\Domain\Port\TaskRepositoryInterface;
+use Doctrine\ORM\EntityManagerInterface;
 
-class DoctrineTaskRepository implements TaskRepositoryInterface
+readonly class DoctrineTaskRepository implements TaskRepositoryInterface
 {
-//    public function __construct(
-//        private EntityManagerInterface $entityManager
-//    ) {
-//    }
+    public function __construct(
+        private EntityManagerInterface $entityManager
+    )
+    {
+    }
 
     public function save(Task $task): void
     {
-        // TODO: Implement save() method.
+        $this->entityManager->persist($task);
+        $this->entityManager->flush();
     }
 
     public function findById(string $id): ?Task
     {
-        // TODO: Implement findById() method.
+        return $this->entityManager->getRepository(Task::class)->find($id);
     }
 
     public function findAll(): array
     {
-        // TODO: Implement findAll() method.
+        return $this->entityManager->getRepository(Task::class)->findAll();
     }
 }

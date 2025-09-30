@@ -3,17 +3,20 @@
 namespace App\Domain\Model;
 
 use DomainException;
-use http\Exception\InvalidArgumentException;
+use InvalidArgumentException;
+
 
 class Task
 {
+    private string $id;
+    private bool $isCompleted = false;
     public function __construct(
-        private string $id,
         private string $title,
         private string $description,
-        private bool $isCompleted = false,
     )
     {
+        $this->id = uniqid('', true);
+
         if(empty($title)) {
             throw new InvalidArgumentException('Title cannot be empty');
         }
