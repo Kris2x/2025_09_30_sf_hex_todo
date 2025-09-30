@@ -2,7 +2,7 @@
 
 namespace App\Presentation\Cli\Command;
 
-use App\Infrastructure\Persistence\Doctrine\DoctrineTaskRepository;
+use App\Domain\Port\TaskRepositoryInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -11,7 +11,7 @@ class GetTasksCommand extends Command
 {
     protected static string $defaultName = 'app:get-tasks';
 
-    public function __construct(private readonly DoctrineTaskRepository $taskRepository)
+    public function __construct(private readonly TaskRepositoryInterface $taskRepository)
     {
         parent::__construct();
     }
