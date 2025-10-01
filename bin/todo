@@ -6,6 +6,9 @@ use App\Task\Presentation\Cli\Command\CreateTaskCommand;
 use App\Task\Presentation\Cli\Command\DeleteTaskCommand;
 use App\Task\Presentation\Cli\Command\GetTasksCommand;
 use App\Task\Presentation\Cli\TodoApplication;
+use App\User\Presentation\Cli\Command\CreateUserCommand;
+use App\User\Presentation\Cli\Command\DeleteUserCommand;
+use App\User\Presentation\Cli\Command\GetUsersCommand;
 use Symfony\Component\Dotenv\Dotenv;
 
 require_once dirname(__DIR__).'/vendor/autoload.php';
@@ -28,6 +31,9 @@ $application->add($container->get(CreateTaskCommand::class));
 $application->add($container->get(GetTasksCommand::class));
 $application->add($container->get(CompleteTaskCommand::class));
 $application->add($container->get(DeleteTaskCommand::class));
+$application->add($container->get(CreateUserCommand::class));
+$application->add($container->get(GetUsersCommand::class));
+$application->add($container->get(DeleteUserCommand::class));
 
 // Set default command
 $application->setDefaultCommand('list');

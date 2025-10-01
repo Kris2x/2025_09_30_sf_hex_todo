@@ -29,7 +29,7 @@ doctrine:
                 is_bundle: false
                 dir: '%kernel.project_dir%/src/User/Domain/Model'
                 prefix: 'App\User\Domain\Model'
-                alias: User
+                alias: App
         controller_resolver:
             auto_mapping: false
 

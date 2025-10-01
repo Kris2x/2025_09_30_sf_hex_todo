@@ -23,6 +23,9 @@ services:
     App\Task\Domain\Port\TaskRepositoryInterface:
         class: App\Task\Infrastructure\Persistence\Doctrine\DoctrineTaskRepository
 
+    App\User\Domain\Port\UserRepositoryInterface:
+        class: App\User\Infrastructure\Persistence\DoctrineUserRepository
+
     # Make commands public for custom console application
     App\Task\Presentation\Cli\Command\CreateTaskCommand:
         public: true
@@ -34,4 +37,13 @@ services:
         public: true
 
     App\Task\Presentation\Cli\Command\DeleteTaskCommand:
+        public: true
+
+    App\User\Presentation\Cli\Command\CreateUserCommand:
+        public: true
+
+    App\User\Presentation\Cli\Command\GetUsersCommand:
+        public: true
+
+    App\User\Presentation\Cli\Command\DeleteUserCommand:
         public: true
