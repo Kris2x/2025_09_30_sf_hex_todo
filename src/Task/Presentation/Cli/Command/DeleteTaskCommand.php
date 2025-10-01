@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Presentation\Cli\Command;
+namespace App\Task\Presentation\Cli\Command;
 
-use App\Application\UseCase\DeleteTask\DeleteTaskCommand as DeleteTaskApplicationCommand;
-use App\Application\UseCase\DeleteTask\DeleteTaskHandler;
+use App\Task\Application\UseCase\DeleteTask\DeleteTaskCommand as DeleteTaskApplicationCommand;
+use App\Task\Application\UseCase\DeleteTask\DeleteTaskHandler;
 use InvalidArgumentException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;

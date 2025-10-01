@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Presentation\Cli\Command;
+namespace App\Task\Presentation\Cli\Command;
 
-use App\Application\UseCase\CompleteTask\CompleteTaskCommand as CompleteTaskApplicationCommand;
-use App\Application\UseCase\CompleteTask\CompleteTaskHandler;
+use App\Task\Application\UseCase\CompleteTask\CompleteTaskCommand as CompleteTaskApplicationCommand;
+use App\Task\Application\UseCase\CompleteTask\CompleteTaskHandler;
 use DomainException;
 use InvalidArgumentException;
 use Symfony\Component\Console\Command\Command;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Presentation\Cli;
+namespace App\Task\Presentation\Cli;
 
 use Symfony\Component\Console\Application;
 

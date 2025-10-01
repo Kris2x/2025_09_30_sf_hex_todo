@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Domain\Port;
+namespace App\Task\Domain\Port;
 
-use App\Domain\Model\Task;
+use App\Task\Domain\Model\Task;
 
 interface TaskRepositoryInterface
 {

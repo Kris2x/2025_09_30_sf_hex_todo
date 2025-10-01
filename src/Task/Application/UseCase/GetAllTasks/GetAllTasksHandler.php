@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Application\UseCase\GetAllTasks;
+namespace App\Task\Application\UseCase\GetAllTasks;
 
-use App\Domain\Model\Task;
-use App\Domain\Port\TaskRepositoryInterface;
+use App\Task\Domain\Model\Task;
+use App\Task\Domain\Port\TaskRepositoryInterface;
 
 final readonly class GetAllTasksHandler
 {

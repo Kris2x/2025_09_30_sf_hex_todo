@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Application\UseCase\CompleteTask;
+namespace App\Task\Application\UseCase\CompleteTask;
 
-use App\Domain\Model\Task;
-use App\Domain\Port\TaskRepositoryInterface;
+use App\Task\Domain\Model\Task;
+use App\Task\Domain\Port\TaskRepositoryInterface;
 use InvalidArgumentException;
 
 final readonly class CompleteTaskHandler

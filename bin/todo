@@ -1,7 +1,11 @@
 #!/usr/bin/env php
 <?php
 
-use App\Presentation\Cli\TodoApplication;
+use App\Task\Presentation\Cli\Command\CompleteTaskCommand;
+use App\Task\Presentation\Cli\Command\CreateTaskCommand;
+use App\Task\Presentation\Cli\Command\DeleteTaskCommand;
+use App\Task\Presentation\Cli\Command\GetTasksCommand;
+use App\Task\Presentation\Cli\TodoApplication;
 use Symfony\Component\Dotenv\Dotenv;
 
 require_once dirname(__DIR__).'/vendor/autoload.php';
@@ -20,10 +24,10 @@ $container = $kernel->getContainer();
 $application = new TodoApplication();
 
 // Register commands from container
-$application->add($container->get(App\Presentation\Cli\Command\CreateTaskCommand::class));
-$application->add($container->get(App\Presentation\Cli\Command\GetTasksCommand::class));
-$application->add($container->get(App\Presentation\Cli\Command\CompleteTaskCommand::class));
-$application->add($container->get(App\Presentation\Cli\Command\DeleteTaskCommand::class));
+$application->add($container->get(CreateTaskCommand::class));
+$application->add($container->get(GetTasksCommand::class));
+$application->add($container->get(CompleteTaskCommand::class));
+$application->add($container->get(DeleteTaskCommand::class));
 
 // Set default command
 $application->setDefaultCommand('list');

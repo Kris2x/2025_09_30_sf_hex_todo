@@ -296,8 +296,7 @@ Dzięki architekturze heksagonalnej możesz łatwo dodać HTTP API:
 
 ```php
 // Presentation/Http/Controller/TaskController.php
-use App\Application\UseCase\CreateTask\CreateTaskCommand;
-use App\Application\UseCase\CreateTask\CreateTaskHandler;
+use App\Task\Application\UseCase\CreateTask\CreateTaskCommand;
 
 class TaskController {
     public function create(Request $request) {

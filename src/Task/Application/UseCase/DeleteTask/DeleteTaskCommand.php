@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Application\UseCase\DeleteTask;
+namespace App\Task\Application\UseCase\DeleteTask;
 
 final readonly class DeleteTaskCommand
 {

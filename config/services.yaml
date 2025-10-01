@@ -20,18 +20,18 @@ services:
     # please note that last definitions always *replace* previous ones
 
     # Bind interface to implementation (Hexagonal Architecture)
-    App\Domain\Port\TaskRepositoryInterface:
-        class: App\Infrastructure\Persistence\Doctrine\DoctrineTaskRepository
+    App\Task\Domain\Port\TaskRepositoryInterface:
+        class: App\Task\Infrastructure\Persistence\Doctrine\DoctrineTaskRepository
 
     # Make commands public for custom console application
-    App\Presentation\Cli\Command\CreateTaskCommand:
+    App\Task\Presentation\Cli\Command\CreateTaskCommand:
         public: true
 
-    App\Presentation\Cli\Command\GetTasksCommand:
+    App\Task\Presentation\Cli\Command\GetTasksCommand:
         public: true
 
-    App\Presentation\Cli\Command\CompleteTaskCommand:
+    App\Task\Presentation\Cli\Command\CompleteTaskCommand:
         public: true
 
-    App\Presentation\Cli\Command\DeleteTaskCommand:
+    App\Task\Presentation\Cli\Command\DeleteTaskCommand:
         public: true

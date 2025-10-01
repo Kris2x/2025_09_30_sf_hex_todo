@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Infrastructure\Persistence\Doctrine;
+namespace App\Task\Infrastructure\Persistence\Doctrine;
 
-use App\Domain\Model\Task;
-use App\Domain\Port\TaskRepositoryInterface;
+use App\Task\Domain\Model\Task;
+use App\Task\Domain\Port\TaskRepositoryInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
 final readonly class DoctrineTaskRepository implements TaskRepositoryInterface

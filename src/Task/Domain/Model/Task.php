@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\Model;
+namespace App\Task\Domain\Model;
 
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
