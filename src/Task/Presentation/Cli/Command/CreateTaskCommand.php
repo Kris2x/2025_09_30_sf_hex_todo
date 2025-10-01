@@ -12,7 +12,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class CreateTaskCommand extends Command
 {
-    protected static $defaultName = 'app:create-task';
+    protected static $defaultName = 'app:task-create';
 
     public function __construct(private readonly CreateTaskHandler $handler)
     {

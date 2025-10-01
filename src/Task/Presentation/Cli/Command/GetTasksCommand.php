@@ -12,7 +12,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class GetTasksCommand extends Command
 {
-    protected static $defaultName = 'app:get-tasks';
+    protected static $defaultName = 'app:tasks';
 
     public function __construct(private readonly GetAllTasksHandler $handler)
     {

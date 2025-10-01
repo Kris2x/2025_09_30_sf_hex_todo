@@ -13,7 +13,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class DeleteTaskCommand extends Command
 {
-    protected static $defaultName = 'app:delete-task';
+    protected static $defaultName = 'app:task-delete';
 
     public function __construct(private readonly DeleteTaskHandler $handler)
     {

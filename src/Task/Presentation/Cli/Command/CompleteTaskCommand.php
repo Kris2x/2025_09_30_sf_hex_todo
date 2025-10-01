@@ -14,7 +14,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class CompleteTaskCommand extends Command
 {
-    protected static $defaultName = 'app:complete-task';
+    protected static $defaultName = 'app:task-complete';
 
     public function __construct(private readonly CompleteTaskHandler $handler)
     {
