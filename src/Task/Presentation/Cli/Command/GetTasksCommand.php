@@ -2,8 +2,8 @@
 
 namespace App\Task\Presentation\Cli\Command;
 
-use App\Task\Application\UseCase\GetAllTasks\GetAllTasksHandler;
-use App\Task\Application\UseCase\GetAllTasks\GetAllTasksQuery;
+use App\Task\Application\Query\GetAllTasks\GetAllTasksHandler;
+use App\Task\Application\Query\GetAllTasks\GetAllTasksQuery;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;

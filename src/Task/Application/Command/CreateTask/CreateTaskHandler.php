@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Task\Application\UseCase\CreateTask;
+namespace App\Task\Application\Command\CreateTask;
 
 use App\Task\Domain\Model\Task;
 use App\Task\Domain\Port\TaskRepositoryInterface;

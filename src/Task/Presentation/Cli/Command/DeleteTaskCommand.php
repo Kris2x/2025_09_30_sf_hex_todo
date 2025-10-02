@@ -2,8 +2,8 @@
 
 namespace App\Task\Presentation\Cli\Command;
 
-use App\Task\Application\UseCase\DeleteTask\DeleteTaskCommand as DeleteTaskApplicationCommand;
-use App\Task\Application\UseCase\DeleteTask\DeleteTaskHandler;
+use App\Task\Application\Command\DeleteTask\DeleteTaskCommand as DeleteTaskApplicationCommand;
+use App\Task\Application\Command\DeleteTask\DeleteTaskHandler;
 use InvalidArgumentException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;

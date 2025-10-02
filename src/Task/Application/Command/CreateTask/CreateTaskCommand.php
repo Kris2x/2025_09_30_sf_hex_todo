@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Task\Application\UseCase\CreateTask;
+namespace App\Task\Application\Command\CreateTask;
 
 final readonly class CreateTaskCommand
 {

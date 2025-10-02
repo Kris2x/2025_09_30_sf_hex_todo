@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Task\Application\UseCase\CompleteTask;
+namespace App\Task\Application\Command\CompleteTask;
 
 use App\Task\Domain\Model\Task;
 use App\Task\Domain\Port\TaskRepositoryInterface;

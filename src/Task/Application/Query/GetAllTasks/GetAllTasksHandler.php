@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Task\Application\UseCase\GetAllTasks;
+namespace App\Task\Application\Query\GetAllTasks;
 
 use App\Task\Domain\Model\Task;
 use App\Task\Domain\Port\TaskRepositoryInterface;

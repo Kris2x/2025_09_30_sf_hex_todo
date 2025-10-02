@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Task\Application\UseCase\CompleteTask;
+namespace App\Task\Application\Command\CompleteTask;
 
 final readonly class CompleteTaskCommand
 {
