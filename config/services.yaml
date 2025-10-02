@@ -36,26 +36,26 @@ services:
         class: App\User\Infrastructure\Security\SymfonyPasswordHasher
 
     # Make commands public for custom console application
-    App\Task\Presentation\Cli\Command\CreateTaskCommand:
+    App\Task\Presentation\Cli\Command\CreateTaskConsoleCommand:
         public: true
 
-    App\Task\Presentation\Cli\Command\GetTasksCommand:
+    App\Task\Presentation\Cli\Command\GetTasksConsoleCommand:
         public: true
 
-    App\Task\Presentation\Cli\Command\CompleteTaskCommand:
+    App\Task\Presentation\Cli\Command\CompleteTaskConsoleCommand:
         public: true
 
-    App\Task\Presentation\Cli\Command\DeleteTaskCommand:
+    App\Task\Presentation\Cli\Command\DeleteTaskConsoleCommand:
         public: true
 
-    App\Task\Presentation\Cli\Command\AssignTaskCommand:
+    App\Task\Presentation\Cli\Command\AssignTaskConsoleCommand:
         public: true
 
-    App\User\Presentation\Cli\Command\CreateUserCommand:
+    App\User\Presentation\Cli\Command\CreateUserConsoleCommand:
         public: true
 
-    App\User\Presentation\Cli\Command\GetUsersCommand:
+    App\User\Presentation\Cli\Command\GetUsersConsoleCommand:
         public: true
 
-    App\User\Presentation\Cli\Command\DeleteUserCommand:
+    App\User\Presentation\Cli\Command\DeleteUserConsoleCommand:
         public: true

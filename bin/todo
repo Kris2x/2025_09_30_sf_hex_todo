@@ -1,15 +1,15 @@
 #!/usr/bin/env php
 <?php
 
-use App\Task\Presentation\Cli\Command\AssignTaskCommand;
-use App\Task\Presentation\Cli\Command\CompleteTaskCommand;
-use App\Task\Presentation\Cli\Command\CreateTaskCommand;
-use App\Task\Presentation\Cli\Command\DeleteTaskCommand;
-use App\Task\Presentation\Cli\Command\GetTasksCommand;
+use App\Task\Presentation\Cli\Command\AssignTaskConsoleCommand;
+use App\Task\Presentation\Cli\Command\CompleteTaskConsoleCommand;
+use App\Task\Presentation\Cli\Command\CreateTaskConsoleCommand;
+use App\Task\Presentation\Cli\Command\DeleteTaskConsoleCommand;
+use App\Task\Presentation\Cli\Command\GetTasksConsoleCommand;
 use App\Task\Presentation\Cli\TodoApplication;
-use App\User\Presentation\Cli\Command\CreateUserCommand;
-use App\User\Presentation\Cli\Command\DeleteUserCommand;
-use App\User\Presentation\Cli\Command\GetUsersCommand;
+use App\User\Presentation\Cli\Command\CreateUserConsoleCommand;
+use App\User\Presentation\Cli\Command\DeleteUserConsoleCommand;
+use App\User\Presentation\Cli\Command\GetUsersConsoleCommand;
 use Symfony\Component\Dotenv\Dotenv;
 
 require_once dirname(__DIR__).'/vendor/autoload.php';
@@ -28,14 +28,14 @@ $container = $kernel->getContainer();
 $application = new TodoApplication();
 
 // Register commands from container
-$application->add($container->get(CreateTaskCommand::class));
-$application->add($container->get(GetTasksCommand::class));
-$application->add($container->get(CompleteTaskCommand::class));
-$application->add($container->get(DeleteTaskCommand::class));
-$application->add($container->get(AssignTaskCommand::class));
-$application->add($container->get(CreateUserCommand::class));
-$application->add($container->get(GetUsersCommand::class));
-$application->add($container->get(DeleteUserCommand::class));
+$application->add($container->get(CreateTaskConsoleCommand::class));
+$application->add($container->get(GetTasksConsoleCommand::class));
+$application->add($container->get(CompleteTaskConsoleCommand::class));
+$application->add($container->get(DeleteTaskConsoleCommand::class));
+$application->add($container->get(AssignTaskConsoleCommand::class));
+$application->add($container->get(CreateUserConsoleCommand::class));
+$application->add($container->get(GetUsersConsoleCommand::class));
+$application->add($container->get(DeleteUserConsoleCommand::class));
 
 // Set default command
 $application->setDefaultCommand('list');

@@ -4,8 +4,7 @@ namespace App\Task\Presentation\Web\Controller;
 
 use App\Task\Application\Command\AssignTask\AssignTaskCommand;
 use App\Task\Application\Command\AssignTask\AssignTaskHandler;
-use App\User\Application\Query\GetAllUsers\GetAllUsersHandler;
-use App\User\Application\Query\GetAllUsers\GetAllUsersQuery;
+use App\User\Application\Query\UserQueryService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,7 +16,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 final class AdminTaskController extends AbstractController
 {
     public function __construct(
-        private readonly GetAllUsersHandler $getAllUsersHandler,
+        private readonly UserQueryService $userQueryService,
         private readonly AssignTaskHandler $assignTaskHandler,
     ) {
     }
@@ -25,8 +24,7 @@ final class AdminTaskController extends AbstractController
     #[Route('/{id}/assign', name: 'admin_task_assign', methods: ['GET'])]
     public function assign(string $id): Response
     {
-        $usersQuery = new GetAllUsersQuery();
-        $users = $this->getAllUsersHandler->handle($usersQuery);
+        $users = $this->userQueryService->getAllUsers();
 
         return $this->render('admin/task/assign.html.twig', [
             'taskId' => $id,

@@ -11,7 +11,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-class DeleteUserCommand extends Command
+class DeleteUserConsoleCommand extends Command
 {
     protected static $defaultName = 'app:user-delete';
 

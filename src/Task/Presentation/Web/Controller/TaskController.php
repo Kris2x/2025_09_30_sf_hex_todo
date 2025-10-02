@@ -12,8 +12,7 @@ use App\Task\Application\Query\GetAllTasks\GetAllTasksHandler;
 use App\Task\Application\Query\GetAllTasks\GetAllTasksQuery;
 use App\Task\Application\Query\GetMyTasks\GetMyTasksHandler;
 use App\Task\Application\Query\GetMyTasks\GetMyTasksQuery;
-use App\User\Application\Query\GetAllUsers\GetAllUsersHandler;
-use App\User\Application\Query\GetAllUsers\GetAllUsersQuery;
+use App\User\Application\Query\UserQueryService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,7 +24,7 @@ final class TaskController extends AbstractController
     public function __construct(
         private readonly GetAllTasksHandler $getAllTasksHandler,
         private readonly GetMyTasksHandler $getMyTasksHandler,
-        private readonly GetAllUsersHandler $getAllUsersHandler,
+        private readonly UserQueryService $userQueryService,
         private readonly CreateTaskHandler $createTaskHandler,
         private readonly CompleteTaskHandler $completeTaskHandler,
         private readonly DeleteTaskHandler $deleteTaskHandler,
@@ -56,8 +55,7 @@ final class TaskController extends AbstractController
 
         // Admin can assign task to any user during creation
         if ($this->isGranted('ROLE_ADMIN')) {
-            $usersQuery = new GetAllUsersQuery();
-            $users = $this->getAllUsersHandler->handle($usersQuery);
+            $users = $this->userQueryService->getAllUsers();
         }
 
         return $this->render('task/create.html.twig', [

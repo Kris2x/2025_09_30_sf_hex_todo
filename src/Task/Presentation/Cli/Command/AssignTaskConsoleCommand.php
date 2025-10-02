@@ -5,8 +5,7 @@ namespace App\Task\Presentation\Cli\Command;
 use App\Task\Application\Command\AssignTask\AssignTaskCommand as AssignTaskApplicationCommand;
 use App\Task\Application\Command\AssignTask\AssignTaskHandler;
 use App\Task\Domain\Port\TaskRepositoryInterface;
-use App\User\Application\Query\GetAllUsers\GetAllUsersHandler;
-use App\User\Application\Query\GetAllUsers\GetAllUsersQuery;
+use App\User\Application\Query\UserQueryService;
 use DomainException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -14,13 +13,13 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-class AssignTaskCommand extends Command
+class AssignTaskConsoleCommand extends Command
 {
     protected static $defaultName = 'app:task-assign';
 
     public function __construct(
         private readonly AssignTaskHandler $assignTaskHandler,
-        private readonly GetAllUsersHandler $getAllUsersHandler,
+        private readonly UserQueryService $userQueryService,
         private readonly TaskRepositoryInterface $taskRepository,
     )
     {
@@ -51,8 +50,7 @@ class AssignTaskCommand extends Command
         $io->title(sprintf('Assigning task: "%s"', $task->getTitle()));
 
         // Get all users
-        $query = new GetAllUsersQuery();
-        $users = $this->getAllUsersHandler->handle($query);
+        $users = $this->userQueryService->getAllUsers();
 
         if (empty($users)) {
             $io->warning('No users found in the system. Please create users first.');

@@ -11,7 +11,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-class DeleteTaskCommand extends Command
+class DeleteTaskConsoleCommand extends Command
 {
     protected static $defaultName = 'app:task-delete';
 
