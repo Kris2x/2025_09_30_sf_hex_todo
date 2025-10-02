@@ -108,11 +108,12 @@ src/
 │   ├── Model/           # Encje domenowe (Task z regułami biznesowymi)
 │   └── Port/            # Interfejsy (porty) definiujące kontrakty
 │
-├── Application/         # 🎬 Przypadki użycia (Use Cases)
-│   └── UseCase/         # Grupowane po feature (Screaming Architecture)
-│       ├── CreateTask/      # Tworzenie zadania
-│       ├── CompleteTask/    # Oznaczanie jako ukończone
-│       ├── DeleteTask/      # Usuwanie zadania
+├── Application/         # 🎬 Warstwa aplikacji z podziałem CQRS
+│   ├── Command/         # Operacje zmieniające stan (write operations)
+│   │   ├── CreateTask/      # Tworzenie zadania
+│   │   ├── CompleteTask/    # Oznaczanie jako ukończone
+│   │   └── DeleteTask/      # Usuwanie zadania
+│   └── Query/           # Operacje tylko do odczytu (read operations)
 │       └── GetAllTasks/     # Pobieranie listy zadań
 │
 ├── Infrastructure/      # ⚙️ Implementacje techniczne (adaptery)
@@ -157,19 +158,19 @@ Domain **nie zależy** od żadnej warstwy (czysta logika biznesowa)!
 - Izolacja logiki biznesowej od frameworka
 
 #### 2. **CQRS Light (Command Query Responsibility Segregation)**
-- **Commands** - operacje zmieniające stan:
-  - `UseCase/CreateTask/CreateTaskCommand` - tworzenie zadania
-  - `UseCase/CompleteTask/CompleteTaskCommand` - oznaczanie jako ukończone
-  - `UseCase/DeleteTask/DeleteTaskCommand` - usuwanie zadania
-- **Queries** - operacje tylko do odczytu:
-  - `UseCase/GetAllTasks/GetAllTasksQuery` - pobieranie listy zadań
+- **Commands** (w `Application/Command/`) - operacje zmieniające stan:
+  - `Command/CreateTask/CreateTaskCommand` - tworzenie zadania
+  - `Command/CompleteTask/CompleteTaskCommand` - oznaczanie jako ukończone
+  - `Command/DeleteTask/DeleteTaskCommand` - usuwanie zadania
+- **Queries** (w `Application/Query/`) - operacje tylko do odczytu:
+  - `Query/GetAllTasks/GetAllTasksQuery` - pobieranie listy zadań
 
-Każdy Use Case jest grupowany w osobnym folderze z Command/Query + Handler.
+Podział strukturalny (osobne katalogi Command/Query) ułatwia nawigację i podkreśla separację odpowiedzialności. Każdy przypadek użycia jest grupowany w osobnym folderze z Command/Query + Handler.
 
 #### 3. **Command/Handler Pattern**
 ```php
-// Application/UseCase/CreateTask/CreateTaskCommand.php
-namespace App\Application\UseCase\CreateTask;
+// Application/Command/CreateTask/CreateTaskCommand.php
+namespace App\Application\Command\CreateTask;
 
 final readonly class CreateTaskCommand {
     public function __construct(
@@ -178,8 +179,8 @@ final readonly class CreateTaskCommand {
     ) {}
 }
 
-// Application/UseCase/CreateTask/CreateTaskHandler.php
-namespace App\Application\UseCase\CreateTask;
+// Application/Command/CreateTask/CreateTaskHandler.php
+namespace App\Application\Command\CreateTask;
 
 final readonly class CreateTaskHandler {
     public function handle(CreateTaskCommand $command): Task {
@@ -275,20 +276,31 @@ php bin/todo app:delete-task <task-id>
 
 ### Dodawanie nowego przypadku użycia
 
-1. **Stwórz folder** w `Application/UseCase/NowyFeature/`
-2. **Stwórz Command/Query DTO** np. `NowyFeatureCommand.php`
-3. **Stwórz Handler** np. `NowyFeatureHandler.php`
-4. **Stwórz CLI Command** w `Presentation/Cli/Command`
-5. **Zarejestruj komendę** w `bin/todo` i `config/services.yaml`
+1. **Zdecyduj czy to Command czy Query**:
+   - Command (zmienia stan) → `Application/Command/`
+   - Query (tylko odczyt) → `Application/Query/`
 
-Przykład struktury:
+2. **Stwórz folder** np. `Application/Command/NowyFeature/`
+3. **Stwórz Command/Query DTO** np. `NowyFeatureCommand.php`
+4. **Stwórz Handler** np. `NowyFeatureHandler.php`
+5. **Stwórz CLI Command** w `Presentation/Cli/Command`
+6. **Zarejestruj komendę** w `bin/todo` i `config/services.yaml`
+
+Przykład struktury (dla Command):
 ```
-Application/UseCase/NowyFeature/
+Application/Command/NowyFeature/
 ├── NowyFeatureCommand.php  (DTO)
-└── NowyFeatureHandler.php  (Use Case)
+└── NowyFeatureHandler.php  (Handler)
 ```
 
-Zobacz implementację `DeleteTask` jako wzorzec.
+Przykład struktury (dla Query):
+```
+Application/Query/GetNowyFeature/
+├── GetNowyFeatureQuery.php  (DTO)
+└── GetNowyFeatureHandler.php  (Handler)
+```
+
+Zobacz implementację `DeleteTask` (Command) lub `GetAllTasks` (Query) jako wzorzec.
 
 ### Rozszerzanie o API REST
 
@@ -296,7 +308,7 @@ Dzięki architekturze heksagonalnej możesz łatwo dodać HTTP API:
 
 ```php
 // Presentation/Http/Controller/TaskController.php
-use App\Task\Application\UseCase\CreateTask\CreateTaskCommand;
+use App\Task\Application\Command\CreateTask\CreateTaskCommand;
 
 class TaskController {
     public function create(Request $request) {
@@ -340,7 +352,7 @@ class Task {
 #### Application - Orkiestracja (koordynuje przepływ)
 
 ```php
-// src/Application/UseCase/CompleteTask/CompleteTaskHandler.php
+// src/Application/Command/CompleteTask/CompleteTaskHandler.php
 final readonly class CompleteTaskHandler {
     public function __construct(
         private TaskRepositoryInterface $taskRepository
