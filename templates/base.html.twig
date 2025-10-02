@@ -106,6 +106,63 @@
             font-size: 0.875rem;
         }
 
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+        }
+
+        .navbar-nav {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            list-style: none;
+        }
+
+        .navbar-nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.2s ease;
+        }
+
+        .navbar-nav a:hover {
+            opacity: 0.8;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-name {
+            color: white;
+            font-weight: 500;
+        }
+
+        .btn-logout {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn-logout:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
         {% block styles %}{% endblock %}
     </style>
     {% block stylesheets %}{% endblock %}
@@ -114,7 +171,23 @@
 <body>
     <header>
         <div class="container">
+            {% if app.user %}
+            <nav class="navbar">
+                <a href="{{ path('task_index') }}" class="navbar-brand">TODO App</a>
+                <ul class="navbar-nav">
+                    <li><a href="{{ path('task_index') }}">Tasks</a></li>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <li><a href="{{ path('user_index') }}">Users</a></li>
+                    {% endif %}
+                    <li class="user-menu">
+                        <span class="user-name">{{ app.user.firstName }} {{ app.user.lastName }}</span>
+                        <a href="{{ path('app_logout') }}" class="btn-logout">Logout</a>
+                    </li>
+                </ul>
+            </nav>
+            {% else %}
             <h1>TODO Application</h1>
+            {% endif %}
         </div>
     </header>
 

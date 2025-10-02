@@ -1,0 +1,144 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User Management - TODO App{% endblock %}
+
+{% block styles %}
+.user-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.user-table {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+thead th {
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+}
+
+tbody tr {
+    border-bottom: 1px solid #e9ecef;
+    transition: background-color 0.2s ease;
+}
+
+tbody tr:last-child {
+    border-bottom: none;
+}
+
+tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+tbody td {
+    padding: 1rem;
+}
+
+.user-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.user-actions form {
+    display: inline;
+}
+
+.user-role {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.user-role.admin {
+    background-color: #e7f3ff;
+    color: #0066cc;
+}
+
+.user-role.user {
+    background-color: #f0f0f0;
+    color: #666;
+}
+
+.empty-state {
+    padding: 3rem;
+    text-align: center;
+    color: #6c757d;
+}
+
+.empty-state h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+{% endblock %}
+
+{% block content %}
+<div class="user-header">
+    <h2>User Management</h2>
+    <a href="{{ path('user_create') }}" class="btn btn-primary">+ New User</a>
+</div>
+
+{% if users|length > 0 %}
+<div class="user-table">
+    <table>
+        <thead>
+            <tr>
+                <th>Email</th>
+                <th>Name</th>
+                <th>Roles</th>
+                <th>Created</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.email }}</td>
+                <td>{{ user.firstName }} {{ user.lastName }}</td>
+                <td>
+                    {% for role in user.roles %}
+                        <span class="user-role {{ role == 'ROLE_ADMIN' ? 'admin' : 'user' }}">
+                            {{ role|replace({'ROLE_': ''}) }}
+                        </span>
+                    {% endfor %}
+                </td>
+                <td>{{ user.createdAt|date('Y-m-d H:i') }}</td>
+                <td>
+                    <div class="user-actions">
+                        <form method="POST" action="{{ path('user_delete', {email: user.email}) }}" onsubmit="return confirm('Are you sure you want to delete this user?');">
+                            <button type="submit" class="btn btn-danger btn-small">Delete</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="user-table">
+    <div class="empty-state">
+        <h2>No users yet!</h2>
+        <p>Create your first user to get started.</p>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

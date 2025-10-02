@@ -1,0 +1,94 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Assign Task - TODO App{% endblock %}
+
+{% block styles %}
+.form-container {
+    max-width: 600px;
+    margin: 0 auto;
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.form-header {
+    margin-bottom: 2rem;
+}
+
+.form-header h2 {
+    font-size: 1.75rem;
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.form-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <div class="form-header">
+        <h2>Assign Task</h2>
+        <p>Select a user to assign this task to, or leave empty to unassign.</p>
+    </div>
+
+    <form method="POST" action="{{ path('task_assign_store', {id: taskId}) }}">
+        <div class="form-group">
+            <label for="userId" class="form-label">Assign To</label>
+            <select
+                id="userId"
+                name="userId"
+                class="form-control"
+            >
+                <option value="">-- Unassign --</option>
+                {% for user in users %}
+                    <option value="{{ user.id }}">{{ user.firstName }} {{ user.lastName }} ({{ user.email }})</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Assign Task</button>
+            <a href="{{ path('task_index') }}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

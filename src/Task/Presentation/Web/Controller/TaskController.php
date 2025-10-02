@@ -2,6 +2,8 @@
 
 namespace App\Task\Presentation\Web\Controller;
 
+use App\Task\Application\Command\AssignTask\AssignTaskCommand;
+use App\Task\Application\Command\AssignTask\AssignTaskHandler;
 use App\Task\Application\Command\CompleteTask\CompleteTaskCommand;
 use App\Task\Application\Command\CompleteTask\CompleteTaskHandler;
 use App\Task\Application\Command\CreateTask\CreateTaskCommand;
@@ -10,18 +12,23 @@ use App\Task\Application\Command\DeleteTask\DeleteTaskCommand;
 use App\Task\Application\Command\DeleteTask\DeleteTaskHandler;
 use App\Task\Application\Query\GetAllTasks\GetAllTasksHandler;
 use App\Task\Application\Query\GetAllTasks\GetAllTasksQuery;
+use App\User\Application\Query\GetAllUsers\GetAllUsersHandler;
+use App\User\Application\Query\GetAllUsers\GetAllUsersQuery;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 final class TaskController extends AbstractController
 {
     public function __construct(
         private readonly GetAllTasksHandler $getAllTasksHandler,
+        private readonly GetAllUsersHandler $getAllUsersHandler,
         private readonly CreateTaskHandler $createTaskHandler,
         private readonly CompleteTaskHandler $completeTaskHandler,
         private readonly DeleteTaskHandler $deleteTaskHandler,
+        private readonly AssignTaskHandler $assignTaskHandler,
     ) {
     }
 
@@ -87,6 +94,40 @@ final class TaskController extends AbstractController
         try {
             $this->deleteTaskHandler->handle($command);
             $this->addFlash('success', 'Task deleted!');
+        } catch (\Exception $e) {
+            $this->addFlash('error', $e->getMessage());
+        }
+
+        return $this->redirectToRoute('task_index');
+    }
+
+    #[Route('/{id}/assign', name: 'task_assign', methods: ['GET'])]
+    #[IsGranted('ROLE_ADMIN')]
+    public function assign(string $id): Response
+    {
+        $usersQuery = new GetAllUsersQuery();
+        $users = $this->getAllUsersHandler->handle($usersQuery);
+
+        return $this->render('task/assign.html.twig', [
+            'taskId' => $id,
+            'users' => $users,
+        ]);
+    }
+
+    #[Route('/{id}/assign', name: 'task_assign_store', methods: ['POST'])]
+    #[IsGranted('ROLE_ADMIN')]
+    public function assignStore(string $id, Request $request): Response
+    {
+        $userId = $request->request->get('userId');
+
+        $command = new AssignTaskCommand(
+            taskId: $id,
+            userId: $userId !== '' ? $userId : null
+        );
+
+        try {
+            $this->assignTaskHandler->handle($command);
+            $this->addFlash('success', $userId ? 'Task assigned successfully!' : 'Task unassigned!');
         } catch (\Exception $e) {
             $this->addFlash('error', $e->getMessage());
         }
