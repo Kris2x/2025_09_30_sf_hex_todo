@@ -119,4 +119,22 @@ class Task
     {
         return $this->createdBy !== null && $this->createdBy->getId() === $user->getId();
     }
+
+    public function isAssignedTo(User $user): bool
+    {
+        return $this->assignee !== null && $this->assignee->getId() === $user->getId();
+    }
+
+    public function setTitle(string $title): void
+    {
+        if (empty($title)) {
+            throw new InvalidArgumentException('Title cannot be empty');
+        }
+        $this->title = $title;
+    }
+
+    public function setDescription(string $description): void
+    {
+        $this->description = $description;
+    }
 }

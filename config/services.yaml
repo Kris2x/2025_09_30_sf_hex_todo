@@ -26,9 +26,6 @@ services:
     App\Task\Domain\Port\CurrentUserProviderInterface:
         class: App\Task\Infrastructure\Security\SymfonyCurrentUserProvider
 
-    App\Task\Domain\Port\AuthorizationInterface:
-        class: App\Task\Infrastructure\Security\SymfonyAuthorizationAdapter
-
     App\User\Domain\Port\UserRepositoryInterface:
         class: App\User\Infrastructure\Persistence\DoctrineUserRepository
 

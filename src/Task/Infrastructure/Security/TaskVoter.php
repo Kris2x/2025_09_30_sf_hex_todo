@@ -3,6 +3,7 @@
 namespace App\Task\Infrastructure\Security;
 
 use App\Task\Domain\Model\Task;
+use App\Task\Domain\Service\TaskAuthorizationService;
 use App\User\Domain\Model\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
@@ -12,6 +13,11 @@ final class TaskVoter extends Voter
     public const EDIT = 'TASK_EDIT';
     public const DELETE = 'TASK_DELETE';
     public const COMPLETE = 'TASK_COMPLETE';
+
+    public function __construct(
+        private readonly TaskAuthorizationService $authorizationService
+    ) {
+    }
 
     protected function supports(string $attribute, mixed $subject): bool
     {
@@ -37,67 +43,12 @@ final class TaskVoter extends Voter
         /** @var Task $task */
         $task = $subject;
 
+        // Voter deleguje decyzje do Domain Service (logika biznesowa)
         return match ($attribute) {
-            self::EDIT => $this->canEdit($task, $user),
-            self::DELETE => $this->canDelete($task, $user),
-            self::COMPLETE => $this->canComplete($task, $user),
+            self::EDIT => $this->authorizationService->canEdit($task, $user),
+            self::DELETE => $this->authorizationService->canDelete($task, $user),
+            self::COMPLETE => $this->authorizationService->canComplete($task, $user),
             default => false,
         };
-    }
-
-    private function canEdit(Task $task, User $user): bool
-    {
-        // Admin może wszystko
-        if ($this->isAdmin($user)) {
-            return true;
-        }
-
-        // Właściciel (createdBy) może edytować
-        if ($task->isOwnedBy($user)) {
-            return true;
-        }
-
-        // Assignee może edytować
-        if ($task->getAssignee() !== null && $task->getAssignee()->getId() === $user->getId()) {
-            return true;
-        }
-
-        return false;
-    }
-
-    private function canDelete(Task $task, User $user): bool
-    {
-        // Admin może wszystko
-        if ($this->isAdmin($user)) {
-            return true;
-        }
-
-        // Tylko właściciel może usuwać
-        return $task->isOwnedBy($user);
-    }
-
-    private function canComplete(Task $task, User $user): bool
-    {
-        // Admin może wszystko
-        if ($this->isAdmin($user)) {
-            return true;
-        }
-
-        // Właściciel (createdBy) może ukończyć
-        if ($task->isOwnedBy($user)) {
-            return true;
-        }
-
-        // Assignee może ukończyć
-        if ($task->getAssignee() !== null && $task->getAssignee()->getId() === $user->getId()) {
-            return true;
-        }
-
-        return false;
-    }
-
-    private function isAdmin(User $user): bool
-    {
-        return in_array('ROLE_ADMIN', $user->getRoles(), true);
     }
 }
