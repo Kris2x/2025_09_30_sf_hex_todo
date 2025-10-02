@@ -70,7 +70,7 @@
         <p>Select a user to assign this task to, or leave empty to unassign.</p>
     </div>
 
-    <form method="POST" action="{{ path('task_assign_store', {id: taskId}) }}">
+    <form method="POST" action="{{ path('admin_task_assign_store', {id: taskId}) }}">
         <div class="form-group">
             <label for="userId" class="form-label">Assign To</label>
             <select

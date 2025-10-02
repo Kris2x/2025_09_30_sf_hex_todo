@@ -14,4 +14,7 @@ interface TaskRepositoryInterface
 
     /** @return Task[] */
     public function findByAssignee(User $user): array;
+
+    /** @return Task[] - Tasks where user is assignee OR createdBy */
+    public function findByUser(User $user): array;
 }

@@ -99,6 +99,22 @@ textarea.form-control {
             ></textarea>
         </div>
 
+        {% if is_granted('ROLE_ADMIN') and users|length > 0 %}
+        <div class="form-group">
+            <label for="assigneeId" class="form-label">Assign To</label>
+            <select
+                id="assigneeId"
+                name="assigneeId"
+                class="form-control"
+            >
+                <option value="">-- Unassigned --</option>
+                {% for user in users %}
+                    <option value="{{ user.id }}">{{ user.firstName }} {{ user.lastName }} ({{ user.email }})</option>
+                {% endfor %}
+            </select>
+        </div>
+        {% endif %}
+
         <div class="form-actions">
             <button type="submit" class="btn btn-primary">Create Task</button>
             <a href="{{ path('task_index') }}" class="btn btn-secondary">Cancel</a>

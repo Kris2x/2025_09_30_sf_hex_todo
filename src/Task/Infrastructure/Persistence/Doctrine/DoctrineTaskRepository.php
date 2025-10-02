@@ -41,4 +41,15 @@ final readonly class DoctrineTaskRepository implements TaskRepositoryInterface
     {
         return $this->entityManager->getRepository(Task::class)->findBy(['assignee' => $user]);
     }
+
+    public function findByUser(User $user): array
+    {
+        return $this->entityManager->createQueryBuilder()
+            ->select('t')
+            ->from(Task::class, 't')
+            ->where('t.assignee = :user OR t.createdBy = :user')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getResult();
+    }
 }

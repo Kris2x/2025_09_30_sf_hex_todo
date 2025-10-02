@@ -70,7 +70,7 @@
         <p>Fill in the details below to create a new user account.</p>
     </div>
 
-    <form method="POST" action="{{ path('user_store') }}">
+    <form method="POST" action="{{ path('admin_user_store') }}">
         <div class="form-group">
             <label for="email" class="form-label">Email *</label>
             <input
@@ -122,7 +122,7 @@
 
         <div class="form-actions">
             <button type="submit" class="btn btn-primary">Create User</button>
-            <a href="{{ path('user_index') }}" class="btn btn-secondary">Cancel</a>
+            <a href="{{ path('admin_user_index') }}" class="btn btn-secondary">Cancel</a>
         </div>
     </form>
 </div>

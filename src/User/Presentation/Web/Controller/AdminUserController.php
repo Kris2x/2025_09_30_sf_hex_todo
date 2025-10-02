@@ -14,9 +14,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-#[Route('/users')]
+#[Route('/admin/users')]
 #[IsGranted('ROLE_ADMIN')]
-final class UserController extends AbstractController
+final class AdminUserController extends AbstractController
 {
     public function __construct(
         private readonly GetAllUsersHandler $getAllUsersHandler,
@@ -25,24 +25,24 @@ final class UserController extends AbstractController
     ) {
     }
 
-    #[Route('/', name: 'user_index', methods: ['GET'])]
+    #[Route('/', name: 'admin_user_index', methods: ['GET'])]
     public function index(): Response
     {
         $query = new GetAllUsersQuery();
         $users = $this->getAllUsersHandler->handle($query);
 
-        return $this->render('user/index.html.twig', [
+        return $this->render('admin/user/index.html.twig', [
             'users' => $users,
         ]);
     }
 
-    #[Route('/create', name: 'user_create', methods: ['GET'])]
+    #[Route('/create', name: 'admin_user_create', methods: ['GET'])]
     public function create(): Response
     {
-        return $this->render('user/create.html.twig');
+        return $this->render('admin/user/create.html.twig');
     }
 
-    #[Route('/create', name: 'user_store', methods: ['POST'])]
+    #[Route('/create', name: 'admin_user_store', methods: ['POST'])]
     public function store(Request $request): Response
     {
         $email = $request->request->get('email', '');
@@ -62,13 +62,13 @@ final class UserController extends AbstractController
             $this->addFlash('success', 'User created successfully!');
         } catch (\Exception $e) {
             $this->addFlash('error', $e->getMessage());
-            return $this->redirectToRoute('user_create');
+            return $this->redirectToRoute('admin_user_create');
         }
 
-        return $this->redirectToRoute('user_index');
+        return $this->redirectToRoute('admin_user_index');
     }
 
-    #[Route('/{email}/delete', name: 'user_delete', methods: ['POST'])]
+    #[Route('/{email}/delete', name: 'admin_user_delete', methods: ['POST'])]
     public function delete(string $email): Response
     {
         $command = new DeleteUserCommand(email: $email);
@@ -80,6 +80,6 @@ final class UserController extends AbstractController
             $this->addFlash('error', $e->getMessage());
         }
 
-        return $this->redirectToRoute('user_index');
+        return $this->redirectToRoute('admin_user_index');
     }
 }

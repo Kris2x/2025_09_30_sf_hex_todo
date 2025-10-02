@@ -93,7 +93,7 @@ tbody td {
 {% block content %}
 <div class="user-header">
     <h2>User Management</h2>
-    <a href="{{ path('user_create') }}" class="btn btn-primary">+ New User</a>
+    <a href="{{ path('admin_user_create') }}" class="btn btn-primary">+ New User</a>
 </div>
 
 {% if users|length > 0 %}
@@ -123,7 +123,7 @@ tbody td {
                 <td>{{ user.createdAt|date('Y-m-d H:i') }}</td>
                 <td>
                     <div class="user-actions">
-                        <form method="POST" action="{{ path('user_delete', {email: user.email}) }}" onsubmit="return confirm('Are you sure you want to delete this user?');">
+                        <form method="POST" action="{{ path('admin_user_delete', {email: user.email}) }}" onsubmit="return confirm('Are you sure you want to delete this user?');">
                             <button type="submit" class="btn btn-danger btn-small">Delete</button>
                         </form>
                     </div>
