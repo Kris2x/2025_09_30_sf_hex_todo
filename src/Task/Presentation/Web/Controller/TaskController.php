@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+#[Route('/tasks')]
 final class TaskController extends AbstractController
 {
     public function __construct(
@@ -64,7 +65,7 @@ final class TaskController extends AbstractController
         ]);
     }
 
-    #[Route('/create', name: 'task_store', methods: ['POST'])]
+    #[Route('/', name: 'task_store', methods: ['POST'])]
     public function store(Request $request): Response
     {
         $title = $request->request->get('title', '');
