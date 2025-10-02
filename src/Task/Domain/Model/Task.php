@@ -32,6 +32,10 @@ class Task
     #[ORM\JoinColumn(name: 'assignee_id', referencedColumnName: 'id', nullable: true, onDelete: 'SET NULL')]
     private ?User $assignee = null;
 
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(name: 'created_by_id', referencedColumnName: 'id', nullable: true, onDelete: 'SET NULL')]
+    private ?User $createdBy = null;
+
     public function __construct(
         string $title,
         string $description = ''
@@ -99,5 +103,20 @@ class Task
     public function unassign(): void
     {
         $this->assignee = null;
+    }
+
+    public function setCreatedBy(User $user): void
+    {
+        $this->createdBy = $user;
+    }
+
+    public function getCreatedBy(): ?User
+    {
+        return $this->createdBy;
+    }
+
+    public function isOwnedBy(User $user): bool
+    {
+        return $this->createdBy !== null && $this->createdBy->getId() === $user->getId();
     }
 }

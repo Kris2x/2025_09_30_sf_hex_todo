@@ -23,8 +23,14 @@ services:
     App\Task\Domain\Port\TaskRepositoryInterface:
         class: App\Task\Infrastructure\Persistence\Doctrine\DoctrineTaskRepository
 
+    App\Task\Domain\Port\CurrentUserProviderInterface:
+        class: App\Task\Infrastructure\Security\SymfonyCurrentUserProvider
+
     App\User\Domain\Port\UserRepositoryInterface:
         class: App\User\Infrastructure\Persistence\DoctrineUserRepository
+
+    App\User\Domain\Port\PasswordHasherInterface:
+        class: App\User\Infrastructure\Security\SymfonyPasswordHasher
 
     # Make commands public for custom console application
     App\Task\Presentation\Cli\Command\CreateTaskCommand:
