@@ -2,8 +2,8 @@
 
 namespace App\User\Presentation\Cli\Command;
 
-use App\User\Application\UseCase\DeleteUser\DeleteUserCommand as DeleteUserApplicationCommand;
-use App\User\Application\UseCase\DeleteUser\DeleteUserHandler;
+use App\User\Application\Command\DeleteUser\DeleteUserCommand as DeleteUserApplicationCommand;
+use App\User\Application\Command\DeleteUser\DeleteUserHandler;
 use InvalidArgumentException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;

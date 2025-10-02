@@ -1,10 +1,10 @@
 <?php
 
-namespace App\User\Application\UseCase\DeleteUser;
+namespace App\User\Application\Command\DeleteUser;
 
 use App\User\Domain\Port\UserRepositoryInterface;
 
-final readonly  class DeleteUserHandler
+final readonly class DeleteUserHandler
 {
     public function __construct(private UserRepositoryInterface $repository)
     {

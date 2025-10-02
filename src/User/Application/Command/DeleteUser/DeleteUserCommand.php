@@ -1,8 +1,8 @@
 <?php
 
-namespace App\User\Application\UseCase\DeleteUser;
+namespace App\User\Application\Command\DeleteUser;
 
-class DeleteUserCommand
+final readonly class DeleteUserCommand
 {
     public function __construct(
         public string $email

@@ -2,8 +2,8 @@
 
 namespace App\User\Presentation\Web\Controller;
 
-use App\User\Application\UseCase\RegisterUser\RegisterUserCommand;
-use App\User\Application\UseCase\RegisterUser\RegisterUserHandler;
+use App\User\Application\Command\RegisterUser\RegisterUserCommand;
+use App\User\Application\Command\RegisterUser\RegisterUserHandler;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

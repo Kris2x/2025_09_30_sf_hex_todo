@@ -2,8 +2,8 @@
 
 namespace App\User\Presentation\Cli\Command;
 
-use App\User\Application\UseCase\GetAllUsers\GetAllUsersHandler;
-use App\User\Application\UseCase\GetAllUsers\GetAllUsersQuery;
+use App\User\Application\Query\GetAllUsers\GetAllUsersHandler;
+use App\User\Application\Query\GetAllUsers\GetAllUsersQuery;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;

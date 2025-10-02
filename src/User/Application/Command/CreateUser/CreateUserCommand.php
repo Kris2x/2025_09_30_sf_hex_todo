@@ -1,6 +1,6 @@
 <?php
 
-namespace App\User\Application\UseCase\CreateUser;
+namespace App\User\Application\Command\CreateUser;
 
 final readonly class CreateUserCommand
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\User\Application\UseCase\RegisterUser;
+namespace App\User\Application\Command\RegisterUser;
 
 use App\User\Domain\Model\User;
 use App\User\Domain\Port\PasswordHasherInterface;

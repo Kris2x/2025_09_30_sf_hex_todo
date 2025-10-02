@@ -2,13 +2,13 @@
 
 namespace App\User\Presentation\Cli\Command;
 
-use App\User\Application\UseCase\CreateUser\CreateUserHandler;
+use App\User\Application\Command\CreateUser\CreateUserHandler;
+use App\User\Application\Command\CreateUser\CreateUserCommand as CreateUserApplicationCommand;
 use Exception;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use App\User\Application\UseCase\CreateUser\CreateUserCommand as CreateUserApplicationCommand;
 
 class CreateUserCommand extends Command
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\User\Application\UseCase\GetAllUsers;
+namespace App\User\Application\Query\GetAllUsers;
 
 use App\User\Domain\Port\UserRepositoryInterface;
 
-readonly class GetAllUsersHandler
+final readonly class GetAllUsersHandler
 {
     public function __construct(private UserRepositoryInterface $userRepository)
     {
