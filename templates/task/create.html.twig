@@ -1,0 +1,108 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Create Task - TODO App{% endblock %}
+
+{% block styles %}
+.form-container {
+    max-width: 600px;
+    margin: 0 auto;
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.form-header {
+    margin-bottom: 2rem;
+}
+
+.form-header h2 {
+    font-size: 1.75rem;
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+textarea.form-control {
+    resize: vertical;
+    min-height: 120px;
+    font-family: inherit;
+}
+
+.form-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <div class="form-header">
+        <h2>Create New Task</h2>
+        <p>Fill in the details below to create a new task.</p>
+    </div>
+
+    <form method="POST" action="{{ path('task_store') }}">
+        <div class="form-group">
+            <label for="title" class="form-label">Title *</label>
+            <input
+                type="text"
+                id="title"
+                name="title"
+                class="form-control"
+                placeholder="Enter task title"
+                required
+            >
+        </div>
+
+        <div class="form-group">
+            <label for="description" class="form-label">Description</label>
+            <textarea
+                id="description"
+                name="description"
+                class="form-control"
+                placeholder="Enter task description (optional)"
+            ></textarea>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Create Task</button>
+            <a href="{{ path('task_index') }}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
