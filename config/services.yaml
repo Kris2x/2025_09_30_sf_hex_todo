@@ -39,6 +39,9 @@ services:
     App\Task\Presentation\Cli\Command\DeleteTaskCommand:
         public: true
 
+    App\Task\Presentation\Cli\Command\AssignTaskCommand:
+        public: true
+
     App\User\Presentation\Cli\Command\CreateUserCommand:
         public: true
 

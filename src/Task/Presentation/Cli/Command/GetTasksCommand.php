@@ -42,18 +42,24 @@ class GetTasksCommand extends Command
         $io->title('📋 Task List');
 
         $table = new Table($output);
-        $table->setHeaders(['ID', 'Title', 'Description', 'Status']);
+        $table->setHeaders(['ID', 'Title', 'Description', 'Status', 'Assigned To']);
 
         foreach ($tasks as $task) {
             $status = $task->isCompleted()
                 ? '<fg=green>✓ Completed</>'
                 : '<fg=yellow>○ Pending</>';
 
+            $assignee = $task->getAssignee();
+            $assignedTo = $assignee
+                ? sprintf('%s %s', $assignee->getFirstName(), $assignee->getLastName())
+                : '<fg=gray>-</>';
+
             $table->addRow([
                 $task->getId(),
                 $task->getTitle(),
                 $task->getDescription(),
-                $status
+                $status,
+                $assignedTo
             ]);
         }
 

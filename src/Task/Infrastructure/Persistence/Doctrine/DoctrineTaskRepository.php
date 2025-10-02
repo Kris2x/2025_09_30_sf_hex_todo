@@ -4,6 +4,7 @@ namespace App\Task\Infrastructure\Persistence\Doctrine;
 
 use App\Task\Domain\Model\Task;
 use App\Task\Domain\Port\TaskRepositoryInterface;
+use App\User\Domain\Model\User;
 use Doctrine\ORM\EntityManagerInterface;
 
 final readonly class DoctrineTaskRepository implements TaskRepositoryInterface
@@ -34,5 +35,10 @@ final readonly class DoctrineTaskRepository implements TaskRepositoryInterface
     {
         $this->entityManager->remove($task);
         $this->entityManager->flush();
+    }
+
+    public function findByAssignee(User $user): array
+    {
+        return $this->entityManager->getRepository(Task::class)->findBy(['assignee' => $user]);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Task\Domain\Model;
 
+use App\User\Domain\Model\User;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use DomainException;
@@ -26,6 +27,10 @@ class Task
 
     #[ORM\Column(type: 'datetime_immutable')]
     private DateTimeImmutable $createdAt;
+
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(name: 'assignee_id', referencedColumnName: 'id', nullable: true, onDelete: 'SET NULL')]
+    private ?User $assignee = null;
 
     public function __construct(
         string $title,
@@ -79,5 +84,20 @@ class Task
     public function isCompleted(): bool
     {
         return $this->completedAt !== null;
+    }
+
+    public function assignTo(?User $user): void
+    {
+        $this->assignee = $user;
+    }
+
+    public function getAssignee(): ?User
+    {
+        return $this->assignee;
+    }
+
+    public function unassign(): void
+    {
+        $this->assignee = null;
     }
 }
